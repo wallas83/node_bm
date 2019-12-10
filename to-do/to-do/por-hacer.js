@@ -6,28 +6,48 @@ let listadoPorHacer = [];
 
 const cargarDB = () => {
 
-        try {
-            listadoPorHacer = require('../db/data.json');
-            console.log(`al cargar la base de datos ${listadoPorHacer} asdasd`);
-        } catch (error) {
-            console.log('salio mal al cargar el archivo');
-            listadoPorHacer = [];
-        }
-
+    try {
+        listadoPorHacer = require('../db/data.json');
+    } catch (error) {
+        console.log('salio mal al cargar el archivo');
+        listadoPorHacer = [];
     }
-    // const cargarDB = () => {
 
-//     try {
-
-//         listadoPorHacer = require('../db/data.json');
-
-//     } catch (error) {
-//         listadoPorHacer = [];
-//     }
-
-// }
+}
 
 
+const getListado = () => {
+    cargarDB();
+    return listadoPorHacer;
+}
+
+const actualizar = (descripcion, completado) => {
+    cargarDB();
+    let index = listadoPorHacer.findIndex(tarea => tarea.descripcion === descripcion);
+    if (index >= 0) {
+        listadoPorHacer[index].completado = completado;
+
+        guardarDB();
+        return true
+    } else {
+        return false;
+    }
+}
+
+const borrar = (descripcion) => {
+    cargarDB();
+    let nuevoListado = listadoPorHacer.filter(tarea => tarea.descripcion !== descripcion);
+
+    if (listadoPorHacer.length === nuevoListado) {
+        return false;
+    } else {
+        listadoPorHacer = nuevoListado;
+        guardarDB();
+        return true;
+    }
+
+
+}
 
 
 
@@ -56,5 +76,8 @@ const guardarDB = () => {
 
 
 module.exports = {
-    crear
+    crear,
+    getListado,
+    actualizar,
+    borrar
 }

@@ -9,6 +9,7 @@ const getLugarLatlng = async(dir) => {
 
     const instance = axios.create({
         baseURL: `https://devru-latitude-longitude-find-v1.p.rapidapi.com/latlon.php?location=${encodedUrl}`,
+        headers: { 'x-Rapidapi-key': '8fa02e7f24msh72a67c593e96149p131d7ejsne1546c6a8412' }
 
     });
 
@@ -18,7 +19,7 @@ const getLugarLatlng = async(dir) => {
         throw new Error(`No hay resultados para la direccion ${dir}`);
 
     }
-    const data = resp.data.Resuls[0];
+    const data = resp.data.Results[0];
     const direccion = data.name;
     const lat = data.lat;
     const lng = data.lon;
